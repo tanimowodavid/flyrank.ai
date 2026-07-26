@@ -24,7 +24,7 @@ This directory contains the Node.js / Express implementation of the Week 2 CRUD 
    ```
 3. **Start the development server:**
    ```bash
-   pnpm dev
+   node app.js
    ```
 4. **Verify the server:**
    - Open http://localhost:3000 in your browser or
