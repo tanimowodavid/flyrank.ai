@@ -57,6 +57,57 @@ app.post("/tasks", (req, res) => {
   return res.status(201).json(newTask);
 });
 
+// PUT /tasks/:id
+app.put("/tasks/:id", (req, res) => {
+  // Find the task by ID
+  const task = tasks.find((t) => t.id == req.params.id);
+
+  // Return 404 if task doesn't exist
+  if (!task) {
+    return res.status(404).json({ error: `Task ${req.params.id} not found` });
+  }
+
+  const { title, done } = req.body;
+
+  // Reject empty request body (400 Bad Request)
+  if (title === undefined && done === undefined) {
+    return res.status(400).json({ error: "Request body cannot be empty" });
+  }
+
+  // Validate title if provided
+  if (title !== undefined) {
+    if (typeof title !== "string" || title.trim() === "") {
+      return res.status(400).json({ error: "Title cannot be empty" });
+    }
+    task.title = title.trim();
+  }
+
+  // Update done status if provided (allows true or false)
+  if (done !== undefined) {
+    task.done = Boolean(done);
+  }
+
+  // Return 200 OK with the updated task
+  return res.status(200).json(task);
+});
+
+// DELETE /tasks/:id
+app.delete("/tasks/:id", (req, res) => {
+  // Find task index
+  const index = tasks.findIndex((t) => t.id == req.params.id);
+
+  // Return 404 if not found (-1 means not found)
+  if (index === -1) {
+    return res.status(404).json({ error: `Task ${req.params.id} not found` });
+  }
+
+  // Remove 1 item at 'index'
+  tasks.splice(index, 1);
+
+  // Send 204 No Content with an empty body
+  return res.status(204).send();
+});
+
 app.get("/health", (req, res) => {
   res.json({ status: "ok" });
 });
