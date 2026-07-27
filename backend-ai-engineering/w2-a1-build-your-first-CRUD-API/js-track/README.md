@@ -23,9 +23,11 @@ This directory contains the Node.js / Express implementation of the Week 2 CRUD 
    pnpm install
    ```
 3. **Start the development server:**
-   ```bash
-   node app.js
-   ```
+
+```bash
+pnpm start
+```
+
 4. **Verify the server:**
    - Open http://localhost:3000 in your browser or
    - Postman
@@ -40,3 +42,13 @@ This directory contains the Node.js / Express implementation of the Week 2 CRUD 
 | ------ | -------- | ------------------------------------------------------- |
 | GET    | /        | Returns metadata about the API.                         |
 | GET    | /health  | Returns a JSON object indicating the server is healthy. |
+
+---
+
+## 📘 Swagger UI
+
+After installing dependencies, start the server and open the documentation at:
+
+- http://localhost:3000/docs
+
+![Swagger UI](../image.png)

@@ -1,8 +1,18 @@
-const express = require("express");
+import express from "express";
+import swaggerUi from "swagger-ui-express";
+import fs from "fs";
 const app = express();
 const port = 3000;
 
 app.use(express.json());
+
+// Load Swagger/OpenAPI document
+const swaggerDocument = JSON.parse(
+  fs.readFileSync(new URL("./swagger.json", import.meta.url), "utf-8"),
+);
+
+// Serve Swagger UI at /api-docs
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 let tasks = [
   { id: 1, title: "Task 1", done: false },
