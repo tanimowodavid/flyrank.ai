@@ -41,6 +41,12 @@ pnpm start
 | Method | Endpoint | Description                                             |
 | ------ | -------- | ------------------------------------------------------- |
 | GET    | /        | Returns metadata about the API.                         |
+| GET    | /docs    | Swagger UI documentation (served by swagger-ui-express) |
+| GET    | /tasks   | Returns a list of all tasks                             |
+| POST   | /tasks   | Create a new task (JSON body: `{ "title": "..." }`) |
+| GET    | /tasks/:id | Retrieve a task by `id`                               |
+| PUT    | /tasks/:id | Update a task by `id` (JSON body: `title` and/or `done`) |
+| DELETE | /tasks/:id | Delete a task by `id`                                 |
 | GET    | /health  | Returns a JSON object indicating the server is healthy. |
 
 ---

@@ -52,4 +52,11 @@ ReDoc: http://127.0.0.1:8000/redoc
 | Method | Endpoint | Description                                             |
 | ------ | -------- | ------------------------------------------------------- |
 | GET    | /        | Returns metadata about the API.                         |
+| GET    | /docs    | Swagger UI (FastAPI auto-generated docs)                |
+| GET    | /redoc   | ReDoc (FastAPI auto-generated docs)                     |
+| GET    | /task    | Returns a list of all tasks                             |
+| POST   | /task    | Create a new task (JSON body: `{ "title": "..." }`) |
+| GET    | /task/{id} | Retrieve a task by `id`                               |
+| PUT    | /tasks/{id} | Update a task by `id` (JSON body: `title` and/or `done`) |
+| DELETE | /tasks/{id} | Delete a task by `id`                                 |
 | GET    | /health  | Returns a JSON object indicating the server is healthy. |
