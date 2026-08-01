@@ -9,3 +9,6 @@ venv/
 ENV/
 .env
 .env.*
+
+# Database
+tasks.db
