@@ -1,0 +1,14 @@
+# Python bytecode / cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment / local configs
+.venv/
+venv/
+ENV/
+.env
+
+
+# Database
+tasks.db
