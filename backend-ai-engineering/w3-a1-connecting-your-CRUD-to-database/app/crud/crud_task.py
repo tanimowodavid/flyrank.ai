@@ -1,5 +1,6 @@
 from typing import List, Optional
 from app.schemas.task import TaskCreate, TaskUpdate
+from app.db.database import get_db_connection
 
 # In-memory database
 db_tasks = [
@@ -8,15 +9,34 @@ db_tasks = [
   { "id": 3, "title": "Task 3", "done": True },
 ];
 
+
 class CRUDTask:
     def get_all(self) -> List[dict]:
-        return db_tasks
+        """Fetch all tasks from the SQLite database."""
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        
+        cursor.execute("SELECT id, title, done FROM tasks")
+        rows = cursor.fetchall()
+        conn.close()
+        
+        # Convert sqlite3.Row objects to standard dictionaries (converting 0/1 to boolean)
+        return [{"id": row["id"], "title": row["title"], "done": bool(row["done"])} for row in rows]
 
     def get_by_id(self, task_id: int) -> Optional[dict]:
-        for task in db_tasks:
-            if task["id"] == task_id:
-                return task
-        return None
+        """Fetch a single task by ID from the SQLite database."""
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        
+        cursor.execute("SELECT id, title, done FROM tasks WHERE id = ?", (task_id,))
+        row = cursor.fetchone()
+        conn.close()
+        
+        if row is None:
+            return None
+            
+        return {"id": row["id"], "title": row["title"], "done": bool(row["done"])}
+
 
     def get_by_title(self, title: str) -> Optional[dict]:
         for task in db_tasks:
