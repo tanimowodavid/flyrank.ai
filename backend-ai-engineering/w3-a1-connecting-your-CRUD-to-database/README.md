@@ -1,6 +1,6 @@
-# Week 2 Assignment: FastAPI CRUD API (Python Track)
+# Week 3 Assignment: connecting your CRUD to database
 
-This directory contains the Python/FastAPI implementation of the Week 2 CRUD API assignment. Dependencies are managed with [`uv`](https://docs.astral.sh/uv/).
+This directory contains the Python/FastAPI implementation of the Week 3 assignment. Dependencies are managed with [`uv`](https://docs.astral.sh/uv/).
 
 ## Stack and prerequisites
 
@@ -92,22 +92,50 @@ curl -X PUT http://127.0.0.1:8000/api/v1/tasks/1 \
 curl -i -X DELETE http://127.0.0.1:8000/api/v1/tasks/1
 ```
 
-## Validation and behavior
+## Database Architecture (Week 3 — Stage 0 to 5)
 
-- `title` is required when creating a task and must contain at least one character.
-- `done` defaults to `false` when omitted.
-- Updates are partial, so send only the fields that should change.
-- Task titles must be unique, case-insensitively. A duplicate returns `400 Bad Request`.
-- A missing task returns `404 Not Found`.
-- Invalid request bodies return FastAPI's `422 Unprocessable Entity` response.
-- Data is stored in memory, so all tasks reset whenever the server restarts. This implementation is intended for the assignment and is not persistent storage.
+### Why SQLite?
 
-## Project structure
+- **Zero-Configuration:** Stored directly as a single file on disk, making setup seamless across development environments.
+- **ACID Compliant:** Offers full transactional integrity without needing an external database server running in a separate process.
+- **Fast & Embedded:** Executes directly inside the Python runtime environment, minimizing local network latency during testing.
+- **Easy to Migrate:** Can be easily swapped out for a more robust database solution like PostgreSQL or MySQL.
 
-```text
-app/
-├── main.py                    # FastAPI application and /api/v1 registration
-├── api/v1/endpoints/          # Health and task route handlers
-├── crud/crud_task.py          # In-memory task operations
-└── schemas/task.py            # Pydantic request and response models
+### Database File Location
+
+The database is initialized as an embedded file stored at the project root:
+
+### Database Schema
+
+| Column Name | Data Type | Description |
+| ----------- | --------- | ----------- |
+| id          | INTEGER   | Primary key |
+| title       | TEXT      | Task title  |
+| done        | BOOLEAN   | Task status |
+
+### Database Seeding
+
+The database is seeded with 3 example tasks on startup. This is done to ensure the database is populated with data and can be used for testing.
+
+### Database Viewer & Sample SQL
+
+You can inspect and manipulate the underlying tasks.db file using DB Browser for SQLite or VS Code's SQLite extension.
+
+Example SQL Queries Tested
+
+```sql
+-- 1. Fetch all tasks
+SELECT \* FROM tasks;
+
+-- 2. Fetch completed tasks only
+SELECT id, title, done FROM tasks WHERE done = 1;
+
+-- 3. Count total tasks in database
+SELECT COUNT(\*) AS total_tasks FROM tasks;
+
+-- 4. Mark all tasks as completed
+UPDATE tasks SET done = 1;
+
+-- 5. Delete completed tasks
+DELETE FROM tasks WHERE done = 1;
 ```
