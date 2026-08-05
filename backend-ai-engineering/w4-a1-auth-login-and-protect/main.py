@@ -1,8 +1,13 @@
 from fastapi import FastAPI
+from dotenv import load_dotenv
+load_dotenv()
 
-app = FastAPI()
+from app.api.api import api_router
+app = FastAPI(
+    title="Task Management API",
+    description="Layered FastAPI Application with SQLite",
+    version="1.0.0",
+)
 
-
-@app.get("/")
-async def root():
-    return {"message": "Server running and connected to Supabase"}
+# Include aggregate router with /api/v1 prefix
+app.include_router(api_router, prefix="/api/v1")
