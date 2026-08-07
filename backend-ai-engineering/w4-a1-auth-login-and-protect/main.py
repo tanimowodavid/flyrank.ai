@@ -4,8 +4,8 @@ load_dotenv()
 
 from app.api.api import api_router
 app = FastAPI(
-    title="Task Management API",
-    description="Layered FastAPI Application with SQLite",
+    title="Auth Service",
+    description="Layered FastAPI Application with Supabase and PostgreSQL",
     version="1.0.0",
 )
 

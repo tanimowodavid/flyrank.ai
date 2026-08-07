@@ -1,6 +1,8 @@
-# Week 4 Assignment 1: Authentication and login
+# Week 4 Assignment 1: Supabase Authentication Practice
 
-This directory contains the Python/FastAPI implementation of the Week 4 assignment. Dependencies are managed with [`uv`](https://docs.astral.sh/uv/).
+This repository is mainly a practice project for learning and implementing authentication flows with Supabase in a FastAPI application. It focuses on basic auth concepts such as sign up, login, and protecting routes with a bearer token.
+
+Dependencies are managed with [`uv`](https://docs.astral.sh/uv/).
 
 ## Stack and prerequisites
 
@@ -8,6 +10,7 @@ This directory contains the Python/FastAPI implementation of the Week 4 assignme
 - FastAPI with the standard dependencies
 - Uvicorn, through the FastAPI CLI
 - `uv`
+- Supabase Python client
 
 ## Installation and running
 
@@ -40,3 +43,22 @@ uv run fastapi dev
 The API is available at `http://127.0.0.1:8000`. FastAPI also provides:
 
 - Swagger UI: http://127.0.0.1:8000/docs
+
+## Available endpoints
+
+### Health
+
+- `GET /health` — returns service health and uptime information
+
+### Public
+
+- `GET /public/info` — returns a public message
+
+### Protected
+
+- `GET /protected/profile` — requires an `Authorization: Bearer <token>` header
+
+### Authentication (Supabase)
+
+- `POST /auth/signup` — creates a new user in Supabase Auth
+- `POST /auth/login` — signs in a user and returns access/refresh tokens
